@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adabiyot Quiz</title>
+</head>
+<body>
+	<!--     USHBU QUIZ XO'JAYEV YO'LDOSHBEK VA MASHARIBOV AZIZBEK TOMONIDAN YARATILGAN  -------->
+	<style type="text/css">
+		body{
+			box-shadow: none;
+		}
+		html, body{
+			background-color: #EBECF0;
+			box-sizing: content-box;
+			margin: 0;
+			font-family: Arial, sans-serif;
+		}
+		.btn{
+			width: 24%;
+			height: 15vh;
+			border: 3px solid black;
+			background-color: royalblue; 
+			margin-top: 3px;
+			border-radius: 6px;
+		}
+		.yuz{
+			background-color: lightgreen;
+		}
+		.ikkiYuz{
+			background-color: lime;
+		}
+		.uchYuz{
+			background-color: gold;
+		}
+		.tortYuz{
+			background-color: tomato;
+		}
+		.beshYuz{
+			background-color: red;
+		}
+		
+		.content{
+			text-align: center;
+		}
+		.input{
+			width: 30%;
+		}
+		.ball{
+			width: 20%;
+			background-color: #551B8C;
+			color: white;
+			margin-top: 15px;
+			padding: 2px;
+		}
+		#marking{
+			text-align: center;
+		}
+		#ballar1{
+			background-color: darkcyan;
+			margin-left: 18%;
+		}
+		#ballar2{
+			background-color: purple;
+			margin-left: 40%;
+			margin-top: -43px;
+		}
+		#ballar3{
+			background-color: orange;
+			margin-left: 62%;
+			margin-top: -43px;
+		}
+		#savol{
+			visibility: hidden;
+			width: 100%;
+			height: 100vh;
+			position: fixed;
+			background-color: #551B8C;
+			text-align: center;
+			margin: 0;
+		}
+		#savol button{
+			padding: 5px;
+			background: snow;
+			font-size: 20px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 2px 2px 7px 5px rgba(0,0,0,.5);
+		}
+		#savol button:hover{
+			box-shadow: 2px 2px 7px 7px rgba(255, 255,255,.5);
+		}
+		#savol button:active{
+			background-color: rgb(180, 180, 180);
+			box-shadow: 2px 2px 7px 7px rgba(180, 180, 180,.5);
+		}
+		.hidden{
+			visibility: hidden;
+		}
+		#question, #congs{
+			color: white;
+			width: 80%;
+			margin-left: 10%;
+		}
+		.ball span {
+			border: 1px solid white;
+			padding: 5px;
+		}
+		.group-name{
+			padding: 0px;
+			margin-top: 7px;
+			border: none;
+		}
+	</style>
+
+	<!--    HTML KODLAR   -->
+	<div class="content">
+		<div id="savol" style="visibility: hidden;">
+			<h1 id="question">Oqmachit qal'asini bosib olish uchun bo'lgan ikkinchi urinishda qal'ani qancha odam himoya qilgan?</h1>
+			<input type="text" id="answer" style="visibility: hidden;">
+			<button onclick="chechAnswer(currentQuestion, 100)" id="tekshir" style="visibility: hidden;">Tekshirish</button>
+			<h1 id="congs" style="visibility: hidden;"></h1>
+			<button onclick="back()">Ortga</button>
+		</div>
+		<button class="btn yuz" id="q1_1" onclick="savolOch('savol1')">100</button>
+		<button class="btn yuz" id="q2_1" onclick="savolOch('savol2')">100</button>
+		<button class="btn yuz" id="q3_1" onclick="savolOch('savol3')">100</button>
+		<button class="btn yuz" id="q4_1" onclick="savolOch('savol4')">100</button>
+
+		<button class="btn ikkiYuz" id="q1" onclick="savolOch('savol5')">200</button>
+		<button class="btn ikkiYuz" id="q2" onclick="savolOch('savol6')">200</button>
+		<button class="btn ikkiYuz" id="q3" onclick="savolOch('savol7')">200</button>
+		<button class="btn ikkiYuz" id="q4" onclick="savolOch('savol8')">200</button>
+
+		<button class="btn uchYuz" id="q5" onclick="savolOch('savol9')">300</button>
+		<button class="btn uchYuz" id="q6" onclick="savolOch('savol10')">300</button>
+		<button class="btn uchYuz" id="q7" onclick="savolOch('savol11')">300</button>
+		<button class="btn uchYuz" id="q8" onclick="savolOch('savol12')">300</button>
+
+		<button class="btn tortYuz" onclick="savolOch('savol13')" id="q9">400</button>
+		<button class="btn tortYuz" onclick="savolOch('savol14')" id="q10">400</button>
+		<button class="btn tortYuz" onclick="savolOch('savol15')" id="q11">400</button>
+		<button class="btn tortYuz" onclick="savolOch('savol16')" id="q12">400</button>
+
+		<button class="btn beshYuz" id="q13" onclick="savolOch('savol17')">500</button>
+		<button class="btn beshYuz" id="q14" onclick="savolOch('savol18')">500</button>
+		<button class="btn beshYuz" id="q15" onclick="savolOch('savol19')">500</button>
+		<button class="btn beshYuz" id="q16" onclick="savolOch('savol20')">500</button>
+
+		<!-- balls  -->
+		<div id="marking">
+		<div class="ball" id="ballar1">
+			<button class="minus-btn" onclick="minusBallGrp1('firstGroup')">-</button>
+			<input type="number" id="firstGroup" class="input">
+			<button class="plus-btn" onclick="addBallGrp1('firstGroup')">+</button><br>
+			<span contenteditable class="group-name">1-guruh</span>
+		</div>
+		<div class="ball" id="ballar2">
+			<button class="minus-btn" onclick="minusBallGrp2('secondGroup')">-</button>
+			<input type="number" id="secondGroup" class="input">
+			<button class="plus-btn" onclick="addBallGrp2('secondGroup')">+</button><br>
+			<span contenteditable class="group-name">2-guruh</span>
+		</div>
+		<div class="ball" id="ballar3">
+			<button class="minus-btn" onclick="minusBallGrp3('thirdGroup')">-</button>
+			<input type="number" id="thirdGroup" class="input">
+			<button class="plus-btn" onclick="addBallGrp3('thirdGroup')">+</button><br>
+			<span contenteditable class="group-name">3-guruh</span>
+		</div>
+	</div>
+	</div>
+
+	<!--   JAVASCRIPT     -------->
+	<script type="text/javascript">
+		console.log("%cPowered by the %cQuiz%cEngine", "font-style: italic", "color:lightblue;font-style: italic;font-size:20px", "color:royalblue;font-style: italic;font-size:20px")
+		console.log("%cQuiz%cEngine %cv0.02a, is a hand-made quiz-making frontend lirary (engine, we'd love to call xD), made by Xo'jayev Yo'ldoshbek and Masharibov Azizbek",
+			"color:lightblue;font-style:italic", "color:royalblue;font-style:italic", "")
+		alert("JAVOB BERISH TARTIBLARI! (Ko'rish uchun 'OK' tugmasini bosing...)")
+		alert("Javob berganda aniq va qisqa qilib berish darkor, va savolda berilgan shartlarni qanoatlantirgan holda yozish kerak. Ma'lum davr yozganda (masalan asrlarni), hech qanday grammatik qo'shimchalarsiz va tinish belgilarsiz, kerakli so'zlarni tashlab ketmasdan yozish talab qilinadi (masalan, 'XVII asr o'rtalari', '70-yillar oxiri', 'Yanvar boshi' va hokazo... Hech qanday '-da' qo'shimchalarsiz.")
+		alert("Misol, To'gri variant: '1980-yil', xato qabul qilinadigan variant esa '1980-yilda'")
+		let currentQuestion = {}
+		var achko = 0;
+		var ball1 = 0;
+		var ball2 = 0;
+		var ball3 = 0;
+		document.getElementById('firstGroup').value = "0"
+		document.getElementById('secondGroup').value = "0"
+		document.getElementById('thirdGroup').value = "0"
+		function addBallGrp1(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball1 += achko
+			ball1 = parseInt(ball1)
+			sumBall.value = ball1
+		};
+
+		function minusBallGrp1(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball1 -=  achko
+			sumBall.value = ball1
+		};
+
+		function addBallGrp2(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball2 +=  achko
+			sumBall.value = ball2;
+		};
+
+		function minusBallGrp2(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball2 -=  achko
+			sumBall.value = ball2;
+		};
+
+		function addBallGrp3(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball3 += achko
+			ball3 = parseInt(ball3)
+			sumBall.value = ball3
+		};
+
+		function minusBallGrp3(grpId){
+			var sumBall = document.getElementById(grpId);
+			ball3 -=  achko
+			sumBall.value = ball3;
+		};
+
+		savollar = {
+			savol1: {
+				matn: "Alisher Navoiyning yashab o'tgan yillari?",
+				tjavob: "1441-1501",
+				ball: 100,
+				elemId: "q1_1"
+			},
+			savol2: {
+				matn: "'Hammomi xayol' risolasini kim yozgan?",
+				tjavob: "Furqat",
+				ball: 100,
+				elemId: "q2_1"
+			},
+			savol3: {
+				matn: "'Litota' so'zining ma'nosi nima? ",
+				tjavob: "kichraytirilgan",
+				ball: 100,
+				elemId: "q3_1"
+			},
+			savol4: {
+				matn: "Musallas necha misradan iborat?",
+				tjavob: "3",
+				ball: 100,
+				elemId: "q4_1"
+			},
+			savol5: {
+				matn: "Xojaning Balxda Shayxulislom qilib tayinlangan yil?",
+				tjavob: "1534",
+				ball: 200,
+				elemId: "q1"
+			},
+			savol6: {
+				matn: "'Jome ul-voqeoti sultoniy' asari kimga tegishli?",
+				tjavob: "Ogahiy",
+				ball: 200,
+				elemId: "q2"
+			},
+			savol7: {
+				matn: "Sipohlar kimlar?",
+				tjavob: "Otliq askarlar",
+				ball: 200,
+				elemId: "q3"
+			},
+			savol8: {
+				matn: "Musaddas necha misradan iborat?",
+				tjavob: "6",
+				ball: 200,
+				elemId: "q4"
+			},
+			savol9: {
+				matn: "'Furqat' so'zining ma'nosi nima?",
+				tjavob: "ayriliq, firoq",
+				ball: 300,
+				elemId: "q5"
+			},
+			savol10: {
+				matn: "Munis boshlab qo'ygan va Ogahiy davom ettirgan asar nomi nima?",
+				tjavob: "Firdavs ul-iqbol",
+				ball: 300,
+				elemId: "q6"
+			},
+			savol11: {
+				matn: "Xojaning qaysi asari Jonibek sultonga bg'ishlanadi?",
+				tjavob: "Maxzan ul-asror",
+				ball: 300,
+				elemId: "q7"
+			},
+			savol12: {
+				matn: "Muashshar necha misradan iborat?",
+				tjavob: "10",
+				ball: 300,
+				elemId: "q8"
+			},
+			savol13: {
+				matn: "'Firdavs ul-iqboll' asari  Xiva xonligining nechanchi yilgacha bo'lgan tarixini o'z ichiga oladi?",
+				tjavob: "1825",
+				ball: 400,
+				elemId: "q9"
+			},
+			savol14: {
+				matn: "Qaysi adiblar aruz vazniga atab risola yozgan?",
+				tjavob: "Furqat, Noviy, Bobur",
+				ball: 400,
+				elemId: "q10"
+			},
+			savol15: {
+				matn: "'Shabiston' so'zining ma'nosi nima?",
+				tjavob: "tungi yotoqxona",
+				ball: 400,
+				elemId: "q11"
+			},
+			savol16: {
+				matn: "Musabba necha misradan iborat?",
+				tjavob: "7",
+				ball: 400,
+				elemId: "q12"
+			},
+			savol17: {
+				matn: "Ogohiy vafot etgan yili Furqat necha yosh bo'lgan?",
+				tjavob: "15",
+				ball: 500,
+				elemId: "q13"
+			},
+			savol18: {
+				matn: "Ogahiyning qaysi asari 'Oshiqlar tumori' ma'nosini anglatadi?",
+				tjavob: "Ta'viz ul-oshiqin",
+				ball: 500,
+				elemId: "q14"
+			},
+			savol19: {
+				matn: "'Ask' so'zining ma'nosi nima?",
+				tjavob: "ko'z yosh",
+				ball: 500,
+				elemId: "q15"
+			},
+			savol20: {
+				matn: "Eron podshosi Kaykovusning o'g'lining ismi?",
+				tjavob: "Siyovush",
+				ball: 500,
+				elemId: "q16"
+			},
+		}
+
+		//   SAVOL   
+		function savolOch($query){
+			currentQuestion = savollar[$query]
+			document.getElementById('savol').style.visibility = "visible"
+			document.getElementById('question').innerHTML = savollar[$query].matn
+			document.getElementById('answer').style.visibility = "visible"
+			document.getElementById('tekshir').style.visibility = "visible"
+		}
+
+		function back(){
+			document.getElementById('savol').style.visibility = "hidden"
+			document.getElementById('tekshir').style.visibility = "hidden"
+			document.getElementById('answer').style.visibility = "hidden"
+			document.getElementById('congs').style.visibility = "hidden"
+		}
+
+		function chechAnswer(question_obj){
+			var javob = document.getElementById('answer')
+			if (javob.value.trim().toLowerCase() == question_obj.tjavob.trim().toLowerCase()) {
+				document.getElementById('congs').innerHTML = "Tabriklaymiz, javobingiz to'g'ri!"
+				javob.style.visibility = "hidden"
+				document.getElementById('tekshir').style.visibility = "hidden"
+				achko = question_obj.ball
+			} else {
+				document.getElementById('congs').innerHTML = `Javob noto'g'ri. To'g'ri javob: ${question_obj.tjavob}`
+				javob.style.visibility = "hidden"
+				document.getElementById('tekshir').style.visibility = "hidden"
+				achko = 0
+			}
+			document.getElementById(question_obj.elemId).classList.add("hidden")
+			document.getElementById('congs').style.visibility = "visible"
+			javob.value = ""	
+		}
+	</script>
+	<!--     USHBU QUIZ XO'JAYEV YO'LDOSHBEK VA MASHARIBOV AZIZBEK TOMONIDAN YARATILGAN  -------->
+
+</body></html>
